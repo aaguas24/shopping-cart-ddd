@@ -8,7 +8,7 @@ Este es el backlog ordenado del proyecto de carrito de compras. Se recomienda se
 - [ ] Configurar H2 como base de datos en memoria
 - [ ] Crear paquete de configuración central
 - [ ] Configurar application.properties
-- [ ] Crear clase principal    de la aplicación
+- [ ] Crear clase principal de la aplicación
 - [ ] Validar que la aplicación corre sin errores
 
 ## Sprint 2: Domain - Bounded Context Catálogo
