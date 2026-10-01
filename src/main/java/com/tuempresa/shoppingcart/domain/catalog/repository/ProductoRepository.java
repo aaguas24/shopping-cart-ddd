@@ -12,4 +12,5 @@ public interface ProductoRepository {
     public List<Producto> findAll() throws JpaExcepcion;
     public Optional<Producto> findById(UUID id) throws JpaExcepcion;
     public Optional<Producto> save(Producto producto) throws JpaExcepcion;
+    public Boolean existById(UUID id) throws JpaExcepcion;
 }

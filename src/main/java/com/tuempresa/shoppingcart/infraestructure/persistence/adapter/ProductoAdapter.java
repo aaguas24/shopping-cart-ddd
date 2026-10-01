@@ -67,4 +67,14 @@ public class ProductoAdapter implements ProductoRepository {
         }
 
     }
+
+    @Override
+    public Boolean existById(UUID id) throws JpaExcepcion {
+        try {
+            return productoRepo.existsById(id);
+        }catch (Exception e) {
+            logger.error("ProductoAdapter -- exist(UUID id): ",e.getMessage());
+            throw new JpaExcepcion("Error al consultar datos");
+        }
+    }
 }

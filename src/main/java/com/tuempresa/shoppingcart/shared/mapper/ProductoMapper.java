@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface ProductoMapper {
 
     @Mapping(source ="categoria.id", target = "idCategoria")
+    @Mapping(target = "precio", expression = "java(new Precio(producto.getPrecio(), producto.getMoneda()))")
     Producto toDomain(ProductoEntity producto);
 
     List<Producto>  toDomain(List<ProductoEntity> productos);
@@ -19,6 +20,9 @@ public interface ProductoMapper {
     default Optional<Producto>  toDomainOptional(Optional<ProductoEntity> producto){
         return producto.map(this::toDomain);
     }
+
+    @Mapping(source = "precio.precio", target = "precio")
+    @Mapping(source = "precio.moneda", target = "moneda")
     ProductoEntity toEntity(Producto producto);
 
 }

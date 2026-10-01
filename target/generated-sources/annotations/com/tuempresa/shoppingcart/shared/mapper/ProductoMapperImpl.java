@@ -5,6 +5,8 @@ import com.tuempresa.shoppingcart.domain.catalog.valueobject.Precio;
 import com.tuempresa.shoppingcart.infraestructure.persistence.jpa.entity.CategoriaEntity;
 import com.tuempresa.shoppingcart.infraestructure.persistence.jpa.entity.ProductoEntity;
 import com.tuempresa.shoppingcart.shared.enums.EstadoProducto;
+import com.tuempresa.shoppingcart.shared.enums.Moneda;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-09-29T16:45:35-0500",
+    date = "2026-10-01T16:10:16-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 @Component
@@ -29,7 +31,6 @@ public class ProductoMapperImpl implements ProductoMapper {
         UUID id = null;
         String nombre = null;
         String descripcion = null;
-        Precio precio = null;
         String sku = null;
         EstadoProducto estado = null;
 
@@ -37,9 +38,10 @@ public class ProductoMapperImpl implements ProductoMapper {
         id = producto.getId();
         nombre = producto.getNombre();
         descripcion = producto.getDescripcion();
-        precio = producto.getPrecio();
         sku = producto.getSku();
         estado = producto.getEstado();
+
+        Precio precio = new Precio(producto.getPrecio(), producto.getMoneda());
 
         Producto producto1 = new Producto( id, nombre, descripcion, precio, sku, idCategoria, estado );
 
@@ -68,11 +70,12 @@ public class ProductoMapperImpl implements ProductoMapper {
 
         ProductoEntity productoEntity = new ProductoEntity();
 
+        productoEntity.setPrecio( productoPrecioPrecio( producto ) );
+        productoEntity.setMoneda( productoPrecioMoneda( producto ) );
         productoEntity.setId( producto.getId() );
         productoEntity.setNombre( producto.getNombre() );
         productoEntity.setDescripcion( producto.getDescripcion() );
         productoEntity.setEstado( producto.getEstado() );
-        productoEntity.setPrecio( producto.getPrecio() );
         productoEntity.setSku( producto.getSku() );
 
         return productoEntity;
@@ -91,5 +94,35 @@ public class ProductoMapperImpl implements ProductoMapper {
             return null;
         }
         return id;
+    }
+
+    private BigDecimal productoPrecioPrecio(Producto producto) {
+        if ( producto == null ) {
+            return null;
+        }
+        Precio precio = producto.getPrecio();
+        if ( precio == null ) {
+            return null;
+        }
+        BigDecimal precio1 = precio.getPrecio();
+        if ( precio1 == null ) {
+            return null;
+        }
+        return precio1;
+    }
+
+    private Moneda productoPrecioMoneda(Producto producto) {
+        if ( producto == null ) {
+            return null;
+        }
+        Precio precio = producto.getPrecio();
+        if ( precio == null ) {
+            return null;
+        }
+        Moneda moneda = precio.getMoneda();
+        if ( moneda == null ) {
+            return null;
+        }
+        return moneda;
     }
 }

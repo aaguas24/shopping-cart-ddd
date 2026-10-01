@@ -3,6 +3,10 @@ C:\Estudio\shopping-cart-ddd-develop\src\main\java\com\tuempresa\shoppingcart\do
 C:\Estudio\shopping-cart-ddd-develop\src\main\java\com\tuempresa\shoppingcart\domain\catalog\entity\Inventario.java
 C:\Estudio\shopping-cart-ddd-develop\src\main\java\com\tuempresa\shoppingcart\domain\catalog\entity\Producto.java
 C:\Estudio\shopping-cart-ddd-develop\src\main\java\com\tuempresa\shoppingcart\domain\catalog\repository\ProductoRepository.java
+C:\Estudio\shopping-cart-ddd-develop\src\main\java\com\tuempresa\shoppingcart\domain\catalog\service\impl\ProductoValidationContexImpl.java
+C:\Estudio\shopping-cart-ddd-develop\src\main\java\com\tuempresa\shoppingcart\domain\catalog\service\ProductoValidationContex.java
+C:\Estudio\shopping-cart-ddd-develop\src\main\java\com\tuempresa\shoppingcart\domain\catalog\service\ProductoValidationStrategy.java
+C:\Estudio\shopping-cart-ddd-develop\src\main\java\com\tuempresa\shoppingcart\domain\catalog\service\strategy\ValidarExistenciaProductoStrategy.java
 C:\Estudio\shopping-cart-ddd-develop\src\main\java\com\tuempresa\shoppingcart\domain\catalog\valueobject\Precio.java
 C:\Estudio\shopping-cart-ddd-develop\src\main\java\com\tuempresa\shoppingcart\infraestructure\persistence\adapter\ProductoAdapter.java
 C:\Estudio\shopping-cart-ddd-develop\src\main\java\com\tuempresa\shoppingcart\infraestructure\persistence\jpa\entity\CategoriaEntity.java

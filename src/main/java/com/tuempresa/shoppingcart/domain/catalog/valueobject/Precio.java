@@ -3,14 +3,12 @@ package com.tuempresa.shoppingcart.domain.catalog.valueobject;
 import com.tuempresa.shoppingcart.shared.enums.Moneda;
 import com.tuempresa.shoppingcart.shared.exception.ArgumentoInvalidoException;
 import com.tuempresa.shoppingcart.shared.validation.ValidateCatalogUtils;
-import jakarta.persistence.Embeddable;
 import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-@Embeddable
 @Getter
 public class Precio {
     private  BigDecimal precio;
