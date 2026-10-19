@@ -57,7 +57,8 @@ public class ProductoAdapter implements ProductoRepository {
     @Override
     public Optional<Producto> save(Producto producto) throws JpaExcepcion{
         try {
-            ProductoEntity productoResponse = productoRepo.save(productoMapper.toEntity(producto));
+            var productoMapperResponse= productoMapper.toEntity(producto);
+            ProductoEntity productoResponse = productoRepo.save(productoMapperResponse);
             if (Objects.isNull(productoResponse))
                 return Optional.empty();
             return productoMapper.toDomainOptional(Optional.of(productoResponse)) ;

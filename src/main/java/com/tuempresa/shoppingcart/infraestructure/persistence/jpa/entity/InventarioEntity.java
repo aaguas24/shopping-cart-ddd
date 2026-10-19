@@ -20,7 +20,7 @@ public class InventarioEntity {
     private Integer stock;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "producto_id")
+    @JoinColumn(name = "id_producto")
     private ProductoEntity producto;
 
 }

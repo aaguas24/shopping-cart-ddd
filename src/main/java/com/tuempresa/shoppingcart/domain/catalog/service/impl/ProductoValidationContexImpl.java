@@ -1,5 +1,6 @@
 package com.tuempresa.shoppingcart.domain.catalog.service.impl;
 
+import com.tuempresa.shoppingcart.domain.catalog.entity.Producto;
 import com.tuempresa.shoppingcart.domain.catalog.service.ProductoValidationContex;
 import com.tuempresa.shoppingcart.domain.catalog.service.ProductoValidationStrategy;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ProductoValidationContexImpl implements ProductoValidationContex {
 
     @Override
     @Transactional(readOnly = true)
-    public void validar(Object object) throws Exception {
+    public void validar(Producto object) throws Exception {
         for (ProductoValidationStrategy strategy : strategies){
             strategy.validar(object);
         }

@@ -17,7 +17,7 @@ public class Precio {
     public Precio() {
 
     }
-    public Precio(BigDecimal precio, Moneda moneda) {
+    private Precio(BigDecimal precio, Moneda moneda) {
         if(!isValidMoneda(moneda))
             throw new ArgumentoInvalidoException("Moneda no válida.");
         if (!isValidPrecio( precio))
@@ -26,7 +26,9 @@ public class Precio {
         this.moneda = moneda;
     }
 
-
+    public static Precio of(BigDecimal precio, Moneda moneda){
+        return new Precio(precio, moneda);
+    }
 
     @Override
     public boolean equals(Object obj) {

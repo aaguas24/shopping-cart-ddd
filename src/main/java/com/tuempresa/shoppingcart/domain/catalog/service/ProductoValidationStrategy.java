@@ -1,7 +1,8 @@
 package com.tuempresa.shoppingcart.domain.catalog.service;
 
 import com.tuempresa.shoppingcart.domain.catalog.entity.Producto;
+import com.tuempresa.shoppingcart.shared.exception.JpaExcepcion;
 
 public interface ProductoValidationStrategy {
-    public void validar(Object object) throws Exception;
+    void validar(Producto object) throws JpaExcepcion;
 }
