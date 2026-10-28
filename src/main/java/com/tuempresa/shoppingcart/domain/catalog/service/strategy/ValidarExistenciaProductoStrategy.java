@@ -19,7 +19,7 @@ public class ValidarExistenciaProductoStrategy implements ProductoValidationStra
     @Override
     public void validar(Producto producto) throws JpaExcepcion {
         try {
-            if (productoRepository.existById(producto.getId()).equals(Boolean.TRUE))
+            if (productoRepository.existByIdOrCodigoSku(producto.getCodigoSku()).equals(Boolean.TRUE))
                 throw new ArgumentoInvalidoException("El producto ya se encuentra registrado.");
         } catch (ArgumentoInvalidoException ex) {
             throw new ArgumentoInvalidoException(ex.getMessage());

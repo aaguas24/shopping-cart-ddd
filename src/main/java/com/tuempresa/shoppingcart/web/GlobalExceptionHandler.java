@@ -3,9 +3,7 @@ package com.tuempresa.shoppingcart.web;
 
 import com.tuempresa.shoppingcart.shared.exception.ArgumentoInvalidoException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -31,11 +29,12 @@ public class GlobalExceptionHandler {
     public ProblemDetail validacionesCapaAplicacion(MethodArgumentNotValidException methodArgumentNotValidException){
         ProblemDetail detail= ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         detail.setTitle(methodArgumentNotValidException.getClass().getSimpleName());
-        detail.setDetail(methodArgumentNotValidException.getBindingResult().getFieldError().getDefaultMessage());
-        detail.setProperty("campoError",methodArgumentNotValidException.getBindingResult().getFieldError().getField());
+
+        var fieldError = methodArgumentNotValidException.getBindingResult().getFieldError();
+        detail.setDetail(fieldError != null ? fieldError.getDefaultMessage() : "Datos de entrada no válidos");
+        detail.setProperty("campoError", fieldError != null ? fieldError.getField() : "general");
         detail.setProperty("fecha", LocalDateTime.now());
         return detail;
     }
 
 }
-

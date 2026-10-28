@@ -1,6 +1,5 @@
 package com.tuempresa.shoppingcart.domain.catalog.service.strategy;
 
-import com.tuempresa.shoppingcart.domain.catalog.entity.Categoria;
 import com.tuempresa.shoppingcart.domain.catalog.repository.CategoriaRepository;
 import com.tuempresa.shoppingcart.domain.catalog.service.CategoriaValidationStrategy;
 import com.tuempresa.shoppingcart.shared.exception.ArgumentoInvalidoException;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@Service("ValidarExistenciaCategoria")
+@Service("validarExistenciaCategoriaStrategy")
 public class ValidarExistenciaCategoriaStategy implements CategoriaValidationStrategy {
 
     private final CategoriaRepository categoriaRepository;

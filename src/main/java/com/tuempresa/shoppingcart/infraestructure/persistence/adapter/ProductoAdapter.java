@@ -9,6 +9,8 @@ import com.tuempresa.shoppingcart.shared.mapper.ProductoMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,13 +29,11 @@ public class ProductoAdapter implements ProductoRepository {
     }
 
     @Override
-    public List<Producto> findAll() throws JpaExcepcion{
+    public Page<Producto> findAll(Pageable pageable) throws JpaExcepcion{
         try {
-            var productoResponse = productoRepo.findAll();
-            if (Objects.isNull(productoResponse) || productoResponse.isEmpty())
-                return Collections.emptyList();
+            Page<ProductoEntity> productoResponse = productoRepo.findAll(pageable);
 
-            return productoMapper.toDomain(productoResponse);
+            return productoMapper.toDomainPage(productoResponse);
         } catch (Exception e) {
             logger.error("ProductoAdapter -- findAll(): ",e.getMessage());
             throw new JpaExcepcion("Error al consultar datos");
@@ -59,8 +59,6 @@ public class ProductoAdapter implements ProductoRepository {
         try {
             var productoMapperResponse= productoMapper.toEntity(producto);
             ProductoEntity productoResponse = productoRepo.save(productoMapperResponse);
-            if (Objects.isNull(productoResponse))
-                return Optional.empty();
             return productoMapper.toDomainOptional(Optional.of(productoResponse)) ;
         } catch (Exception e) {
             logger.error("ProductoAdapter -- save(Producto producto): ",e.getMessage());
@@ -75,6 +73,16 @@ public class ProductoAdapter implements ProductoRepository {
             return productoRepo.existsById(id);
         }catch (Exception e) {
             logger.error("ProductoAdapter -- exist(UUID id): ",e.getMessage());
+            throw new JpaExcepcion("Error al consultar datos");
+        }
+    }
+
+    @Override
+    public Boolean existByIdOrCodigoSku(String codigoSku) throws JpaExcepcion {
+        try {
+            return productoRepo.existsByCodigoSku(codigoSku);
+        }catch (Exception e) {
+            logger.error("ProductoAdapter -- existByIdOrCodigoSku(UUID id): ",e.getMessage());
             throw new JpaExcepcion("Error al consultar datos");
         }
     }

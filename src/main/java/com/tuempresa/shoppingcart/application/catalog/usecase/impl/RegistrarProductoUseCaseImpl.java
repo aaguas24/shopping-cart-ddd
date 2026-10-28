@@ -4,6 +4,7 @@ import com.tuempresa.shoppingcart.application.catalog.dto.ProductoDTO;
 import com.tuempresa.shoppingcart.application.catalog.usecase.RegistrarProductoUseCase;
 import com.tuempresa.shoppingcart.domain.catalog.repository.ProductoRepository;
 import com.tuempresa.shoppingcart.domain.catalog.service.ProductoValidationStrategy;
+import com.tuempresa.shoppingcart.domain.catalog.service.strategy.ValidarExistenciaCategoriaStategy;
 import com.tuempresa.shoppingcart.shared.exception.ArgumentoInvalidoException;
 import com.tuempresa.shoppingcart.shared.exception.JpaExcepcion;
 import com.tuempresa.shoppingcart.shared.mapper.ProductoMapper;
@@ -17,20 +18,25 @@ public class RegistrarProductoUseCaseImpl implements RegistrarProductoUseCase {
     @Qualifier("validarExistenciaProductoStrategy")
     private final ProductoValidationStrategy validarExistenciaProducto;
 
+    @Qualifier("validarExistenciaCategoriaStrategy")
+    private final ValidarExistenciaCategoriaStategy validarExistenciaCategoriaStategy;
+
     private final ProductoMapper productoMapper;
 
-    public RegistrarProductoUseCaseImpl(ProductoRepository productoRepo, ProductoValidationStrategy validarExistenciaProducto, ProductoMapper productoMapper) {
+    public RegistrarProductoUseCaseImpl(ProductoRepository productoRepo, ProductoValidationStrategy validarExistenciaProducto, ValidarExistenciaCategoriaStategy validarExistenciaCategoriaStategy, ProductoMapper productoMapper) {
         this.productoRepo = productoRepo;
         this.validarExistenciaProducto = validarExistenciaProducto;
+        this.validarExistenciaCategoriaStategy = validarExistenciaCategoriaStategy;
         this.productoMapper = productoMapper;
     }
 
     @Override
     public ProductoDTO registrar(ProductoDTO producto) throws JpaExcepcion {
         try {
+            validarExistenciaCategoriaStategy.validar(producto.getIdCategoria());
             var productoDomain
                     = productoMapper.toDomain(producto);
-//            validarExistenciaProducto.validar(productoDomain);
+            validarExistenciaProducto.validar(productoDomain);
             var productoResponse =  productoRepo.save(productoDomain);
             if(productoResponse.isPresent())
                 return productoMapper.toDTO(productoResponse.get());

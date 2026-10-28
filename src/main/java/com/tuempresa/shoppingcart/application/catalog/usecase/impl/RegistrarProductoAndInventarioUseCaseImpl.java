@@ -5,6 +5,7 @@ import com.tuempresa.shoppingcart.application.catalog.usecase.RegistrarInventari
 import com.tuempresa.shoppingcart.application.catalog.usecase.RegistrarProductoAndInventarioUseCase;
 import com.tuempresa.shoppingcart.application.catalog.usecase.RegistrarProductoUseCase;
 import com.tuempresa.shoppingcart.application.catalog.wrapper.ProductoAndInventarioWrapper;
+import com.tuempresa.shoppingcart.domain.catalog.entity.Producto;
 import com.tuempresa.shoppingcart.domain.catalog.service.strategy.ValidarExistenciaCategoriaStategy;
 import com.tuempresa.shoppingcart.shared.exception.ArgumentoInvalidoException;
 import com.tuempresa.shoppingcart.shared.exception.JpaExcepcion;
@@ -14,23 +15,23 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class RegistrarProductoAndInventarioUseCaseImpl implements RegistrarProductoAndInventarioUseCase {
 
     private final RegistrarProductoUseCase registrarProductoUseCase;
     private final RegistrarInventarioUseCase registrarInventarioUseCase;
-    private final ValidarExistenciaCategoriaStategy validarExistenciaCategoriaStategy;
     private final RabbitTemplate rabbitTemplate;
     private final JmsTemplate jmsTemplate;
     private final ObjectMapper objectMapper;
 
     public RegistrarProductoAndInventarioUseCaseImpl(RegistrarProductoUseCase registrarProductoUseCase,
                                                      RegistrarInventarioUseCase registrarInventarioUseCase,
-                                                     @Qualifier("ValidarExistenciaCategoria") ValidarExistenciaCategoriaStategy validarExistenciaCategoriaStategy,
                                                      RabbitTemplate rabbitTemplate, JmsTemplate jmsTemplate, ObjectMapper objectMapper) {
         this.registrarProductoUseCase = registrarProductoUseCase;
         this.registrarInventarioUseCase = registrarInventarioUseCase;
-        this.validarExistenciaCategoriaStategy = validarExistenciaCategoriaStategy;
         this.rabbitTemplate = rabbitTemplate;
         this.jmsTemplate = jmsTemplate;
         this.objectMapper = objectMapper;
@@ -41,7 +42,6 @@ public class RegistrarProductoAndInventarioUseCaseImpl implements RegistrarProdu
     public ProductoAndInventarioWrapper registrar(ProductoAndInventarioWrapper productoAndInventarioWrapper) throws JpaExcepcion {
         try {
             ProductoAndInventarioWrapper wrapper = new ProductoAndInventarioWrapper();
-            validarExistenciaCategoriaStategy.validar(productoAndInventarioWrapper.getProducto().getIdCategoria());
             var productosResponse = registrarProductoUseCase.registrar(productoAndInventarioWrapper.getProducto());
             wrapper.setProducto(productosResponse);
             productoAndInventarioWrapper.getInventario().setIdProducto(productosResponse.getId());

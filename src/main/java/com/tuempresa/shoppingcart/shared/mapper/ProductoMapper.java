@@ -8,6 +8,7 @@ import com.tuempresa.shoppingcart.shared.enums.Moneda;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,13 +22,31 @@ public interface ProductoMapper {
     @Mapping(target = "precio", expression = "java(mapBigDecimalToPrecio(producto.getPrecio(), producto.getMoneda()))")
     Producto toDomain(ProductoEntity producto);
 
-    List<Producto>  toDomain(List<ProductoEntity> productos);
-
-    List<ProductoDTO>  ToDTO(List<Producto> productos);
-
-    default Optional<Producto>  toDomainOptional(Optional<ProductoEntity> producto){
+    default Page<Producto> toDomainPage(Page<ProductoEntity> producto) {
+        if (producto == null) {
+            return Page.empty();
+        }
         return producto.map(this::toDomain);
     }
+
+    default List<Producto> toDomain(List<ProductoEntity> productos) {
+        if (productos == null) {
+            return List.of();
+        }
+        return productos.stream().map(this::toDomain).toList();
+    }
+
+    default Page<ProductoDTO> toDTO(Page<Producto> productos) {
+        if (productos == null) {
+            return Page.empty();
+        }
+        return productos.map(this::toDTO);
+    }
+
+    default Optional<Producto> toDomainOptional(Optional<ProductoEntity> producto){
+        return producto.map(this::toDomain);
+    }
+
 
     @Mapping(source = "precio", target = "precio", qualifiedByName = "extraerPrecioValue")
     @Mapping(source = "precio", target = "moneda", qualifiedByName = "extraerMoneda")
@@ -36,7 +55,6 @@ public interface ProductoMapper {
 
     @Mapping(target = "precio", expression = "java(mapBigDecimalToPrecio(producto.getPrecio(), producto.getMoneda()))")
     Producto toDomain(ProductoDTO producto);
-
 
     @Mapping(source = "precio", target = "precio", qualifiedByName = "extraerPrecioValue")
     @Mapping(source = "precio", target = "moneda", qualifiedByName = "extraerMoneda")
