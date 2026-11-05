@@ -3,7 +3,7 @@ package com.tuempresa.shoppingcart.shared.mapper;
 import com.tuempresa.shoppingcart.application.catalog.dto.ProductoDTO;
 import com.tuempresa.shoppingcart.domain.catalog.entity.Producto;
 import com.tuempresa.shoppingcart.domain.catalog.valueobject.Precio;
-import com.tuempresa.shoppingcart.infraestructure.persistence.jpa.entity.ProductoEntity;
+import com.tuempresa.shoppingcart.infraestructure.catalog.persistence.jpa.entity.ProductoEntity;
 import com.tuempresa.shoppingcart.shared.enums.Moneda;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

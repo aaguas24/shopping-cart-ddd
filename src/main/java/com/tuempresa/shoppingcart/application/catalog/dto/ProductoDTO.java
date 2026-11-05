@@ -12,6 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -44,4 +45,8 @@ public class ProductoDTO {
 
     @NotNull(message = "La categoria del producto debe ser válida.")
     private UUID idCategoria;
+
+    private LocalDateTime fechaRegistro;
+
+    private LocalDateTime fechaActualizacion;
 }

@@ -7,6 +7,7 @@ import com.tuempresa.shoppingcart.shared.exception.ArgumentoInvalidoException;
 import com.tuempresa.shoppingcart.shared.validation.ValidateCatalogUtils;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,19 +19,23 @@ public class Producto extends AggregateRoot {
     private final String codigoSku;
     private final EstadoProducto estado;
     private final UUID idCategoria;
+    private LocalDateTime fechaRegistro;
+    private LocalDateTime fechaActualizacion;
 
-    public Producto(UUID id, String nombre, String descripcion, Precio precio, String codigoSku, UUID idCategoria, EstadoProducto estado) {
+
+    public Producto(UUID id, String nombre, String descripcion, Precio precio, String codigoSku,
+                    EstadoProducto estado, UUID idCategoria, LocalDateTime fechaRegistro, LocalDateTime fechaActualizacion) {
         super(id);
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.codigoSku = codigoSku;
-        this.idCategoria = idCategoria;
         this.estado = estado;
+        this.idCategoria = idCategoria;
+        this.fechaRegistro = fechaRegistro;
+        this.fechaActualizacion = fechaActualizacion;
         validarAtributos(this);
     }
-
-
 
     public void validarAtributos(Producto producto){
         if(Objects.isNull(producto))

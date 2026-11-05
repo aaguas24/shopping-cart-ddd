@@ -2,7 +2,7 @@ package com.tuempresa.shoppingcart.shared.mapper;
 
 import com.tuempresa.shoppingcart.application.catalog.dto.CategoriaDTO;
 import com.tuempresa.shoppingcart.domain.catalog.entity.Categoria;
-import com.tuempresa.shoppingcart.infraestructure.persistence.jpa.entity.CategoriaEntity;
+import com.tuempresa.shoppingcart.infraestructure.catalog.persistence.jpa.entity.CategoriaEntity;
 import org.mapstruct.Mapper;
 
 import java.util.List;

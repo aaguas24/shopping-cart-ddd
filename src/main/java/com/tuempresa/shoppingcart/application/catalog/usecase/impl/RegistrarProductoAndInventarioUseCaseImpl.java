@@ -5,13 +5,9 @@ import com.tuempresa.shoppingcart.application.catalog.usecase.RegistrarInventari
 import com.tuempresa.shoppingcart.application.catalog.usecase.RegistrarProductoAndInventarioUseCase;
 import com.tuempresa.shoppingcart.application.catalog.usecase.RegistrarProductoUseCase;
 import com.tuempresa.shoppingcart.application.catalog.wrapper.ProductoAndInventarioWrapper;
-import com.tuempresa.shoppingcart.domain.catalog.entity.Producto;
-import com.tuempresa.shoppingcart.domain.catalog.service.strategy.ValidarExistenciaCategoriaStategy;
 import com.tuempresa.shoppingcart.shared.exception.ArgumentoInvalidoException;
 import com.tuempresa.shoppingcart.shared.exception.JpaExcepcion;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jms.core.JmsTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,18 +19,15 @@ public class RegistrarProductoAndInventarioUseCaseImpl implements RegistrarProdu
 
     private final RegistrarProductoUseCase registrarProductoUseCase;
     private final RegistrarInventarioUseCase registrarInventarioUseCase;
-    private final RabbitTemplate rabbitTemplate;
-    private final JmsTemplate jmsTemplate;
     private final ObjectMapper objectMapper;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     public RegistrarProductoAndInventarioUseCaseImpl(RegistrarProductoUseCase registrarProductoUseCase,
-                                                     RegistrarInventarioUseCase registrarInventarioUseCase,
-                                                     RabbitTemplate rabbitTemplate, JmsTemplate jmsTemplate, ObjectMapper objectMapper) {
+                                                     RegistrarInventarioUseCase registrarInventarioUseCase, ObjectMapper objectMapper, KafkaTemplate<String, String> kafkaTemplate) {
         this.registrarProductoUseCase = registrarProductoUseCase;
         this.registrarInventarioUseCase = registrarInventarioUseCase;
-        this.rabbitTemplate = rabbitTemplate;
-        this.jmsTemplate = jmsTemplate;
         this.objectMapper = objectMapper;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override
@@ -48,8 +41,7 @@ public class RegistrarProductoAndInventarioUseCaseImpl implements RegistrarProdu
             var inventarioResponse= registrarInventarioUseCase.registrar(productoAndInventarioWrapper.getInventario());
             wrapper.setInventario(inventarioResponse);
             String objectWrapper = objectMapper.writeValueAsString(wrapper);
-            jmsTemplate.convertAndSend("producto.registro", objectWrapper);
-//            rabbitTemplate.convertAndSend("NOTIFICAR_EXCHANGE","producto.registrado",wrapper);
+            kafkaTemplate.send("mensajes", objectWrapper);
             return wrapper;
         } catch (ArgumentoInvalidoException e) {
             throw new ArgumentoInvalidoException(e.getMessage());

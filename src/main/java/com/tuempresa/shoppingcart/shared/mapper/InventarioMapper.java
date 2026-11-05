@@ -2,7 +2,7 @@ package com.tuempresa.shoppingcart.shared.mapper;
 
 import com.tuempresa.shoppingcart.application.catalog.dto.InventarioDTO;
 import com.tuempresa.shoppingcart.domain.catalog.entity.Inventario;
-import com.tuempresa.shoppingcart.infraestructure.persistence.jpa.entity.InventarioEntity;
+import com.tuempresa.shoppingcart.infraestructure.catalog.persistence.jpa.entity.InventarioEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
