@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>409 - Argumento inválido</title>
+    <style>
+        :root {
+            --bg: #f5f7fb;
+            --card: #ffffff;
+            --primary: #0d6efd;
+            --danger: #dc3545;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --border: #e5e7eb;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Inter, Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+        .container {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+        .card {
+            width: min(760px, 100%);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 36px;
+            box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+        }
+        .badge {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(220, 53, 69, 0.12);
+            color: var(--danger);
+            font-weight: 700;
+            font-size: .85rem;
+            letter-spacing: .02em;
+        }
+        h1 {
+            margin: 16px 0 12px;
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.1;
+        }
+        p {
+            margin: 0 0 16px;
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 1.02rem;
+        }
+        .details {
+            margin: 24px 0;
+            padding: 18px 20px;
+            border-radius: 16px;
+            background: #fafafa;
+            border: 1px solid var(--border);
+        }
+        .details strong {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 6px;
+        }
+        .actions {
+            margin-top: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 1px solid transparent;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border-color: var(--border);
+        }
+        .footer {
+            margin-top: 18px;
+            color: var(--muted);
+            font-size: .95rem;
+        }
+        .mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <section class="card" aria-labelledby="titulo-error">
+            <span class="badge">HTTP 409 · Conflict</span>
+            <h1 id="titulo-error">Argumento inválido</h1>
+            <p>
+                La solicitud no pudo procesarse porque uno o más datos enviados no cumplen las reglas de negocio.
+            </p>
+            <p>
+                Revisa los campos obligatorios, los valores permitidos y el formato de la información antes de volver a intentar.
+            </p>
+
+            <div class="details">
+                <strong>Qué significa este error</strong>
+                <p>
+                    El servidor detectó un conflicto al validar la operación. Normalmente ocurre cuando el payload contiene
+                    valores inconsistentes, incompletos o fuera de rango.
+                </p>
+            </div>
+
+            <div class="details">
+                <strong>Acciones recomendadas</strong>
+                <p>1. Verifica que no haya campos vacíos.</p>
+                <p>2. Confirma que los tipos de dato sean correctos.</p>
+                <p>3. Reintenta la operación con datos válidos.</p>
+            </div>
+
+            <div class="actions">
+                <a class="btn btn-primary" href="/">Volver al inicio</a>
+                <a class="btn btn-secondary" href="/">Abrir portada</a>
+            </div>
+
+            <p class="footer">
+                Ruta sugerida: <span class="mono">src/main/resources/static/error/409.html</span>
+            </p>
+        </section>
+    </main>
+</body>
+</html>
+
+
