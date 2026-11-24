@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "permiso_entity")
+@Table(name = "permiso")
 public class PermisoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

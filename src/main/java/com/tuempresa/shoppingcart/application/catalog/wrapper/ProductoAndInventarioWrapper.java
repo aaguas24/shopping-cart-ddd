@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.List;
+
 
 @ToString
 @AllArgsConstructor
@@ -20,4 +22,6 @@ public class ProductoAndInventarioWrapper {
     @Valid
     @NotNull(message = "El inventario del producto a registrar debe ser válido.")
     private InventarioDTO inventario;
+
+    private List<byte[]> imagen;
 }

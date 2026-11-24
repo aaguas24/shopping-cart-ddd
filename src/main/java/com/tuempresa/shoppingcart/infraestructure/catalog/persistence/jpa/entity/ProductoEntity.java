@@ -29,6 +29,11 @@ public class ProductoEntity {
     @Column
     private String descripcion;
 
+    @ElementCollection
+    @CollectionTable(name = "producto_imagenes", joinColumns = @JoinColumn(name = "producto_id"))
+    @OrderColumn(name = "orden")
+    private List<String> imagenUrl = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     @Column(name = "estado")
     private EstadoProducto estado;
@@ -56,10 +61,11 @@ public class ProductoEntity {
     @OneToMany(mappedBy = "producto", orphanRemoval = true)
     private List<InventarioEntity> inventario;
 
-    public ProductoEntity(UUID id, String nombre, String descripcion, EstadoProducto estado, BigDecimal precio, Moneda moneda, String codigoSku, CategoriaEntity categoria, List<InventarioEntity> inventario) {
+    public ProductoEntity(UUID id, String nombre, String descripcion, List<String> imagenUrl, EstadoProducto estado, BigDecimal precio, Moneda moneda, String codigoSku, CategoriaEntity categoria, List<InventarioEntity> inventario) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.imagenUrl = imagenUrl == null ? new ArrayList<>() : new ArrayList<>(imagenUrl);
         this.estado = estado;
         this.precio = precio;
         this.moneda = moneda;

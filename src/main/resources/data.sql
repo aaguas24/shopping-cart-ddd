@@ -11,7 +11,7 @@ INSERT INTO categoria (id, nombre, descripcion) VALUES
 
 INSERT INTO producto (id, nombre, descripcion, estado, precio, moneda, codigo_sku, categoria_id)
 SELECT
-    RANDOM_UUID(),
+    gen_random_uuid(),
     CONCAT(
         CASE MOD(x, 25)
             WHEN 0 THEN 'Dell'
@@ -110,29 +110,29 @@ SELECT
     CAST(89000 + (x * 1750) + MOD(x, 13) * 330 AS DECIMAL(10,2)),
     'PESO',
     CONCAT('SKU-', LPAD(CAST(x AS VARCHAR), 4, '0')),
-    CASE MOD(x, 5)
+    CAST(CASE MOD(x, 5)
         WHEN 0 THEN '55555555-5555-4555-8555-555555555555'
         WHEN 1 THEN '11111111-1111-4111-8111-111111111111'
         WHEN 2 THEN '22222222-2222-4222-8222-222222222222'
         WHEN 3 THEN '33333333-3333-4333-8333-333333333333'
         ELSE '44444444-4444-4444-8444-444444444444'
-    END
-FROM SYSTEM_RANGE(1, 1000) AS seq(x);
+    END AS UUID)
+FROM generate_series(1, 1000) AS seq(x);
 
 INSERT INTO inventario (id, stock, id_producto)
 SELECT
-    RANDOM_UUID(),
+    gen_random_uuid(),
     ((x - 1) % 90) + 10,
     p.id
-FROM SYSTEM_RANGE(1, 1000) AS seq(x)
+FROM generate_series(1, 1000) AS seq(x)
 JOIN producto p ON p.codigo_sku = CONCAT('SKU-', LPAD(CAST(x AS VARCHAR), 4, '0'));
 
-DELETE FROM rol_permiso_entity;
-DELETE FROM permiso_entity;
+DELETE FROM rol_permiso;
+DELETE FROM permiso;
 DELETE FROM rol_usuario;
-DELETE FROM user_entity;
+DELETE FROM usuario;
 
-INSERT INTO user_entity (id, segundo_apellido, primer_apellido, nombre, email, password_hash, telefono, estado, fecha_creacion, fecha_actualizacion) VALUES
+INSERT INTO usuario (id, segundo_apellido, primer_apellido, nombre, email, password_hash, telefono, estado, fecha_creacion, fecha_actualizacion) VALUES
     ('10000000-0000-4000-8000-000000000001', 'Pérez', 'García', 'Ana', 'ana.garcia@tienda.com', 'hash_ana_123', '+56911111111', 'ACTIVO', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('10000000-0000-4000-8000-000000000002', 'Rojas', 'Muñoz', 'Luis', 'luis.munoz@tienda.com', 'hash_luis_123', '+56922222222', 'ACTIVO', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('10000000-0000-4000-8000-000000000003', 'Torres', 'Silva', 'Maria', 'maria.silva@tienda.com', 'hash_maria_123', '+56933333333', 'ACTIVO', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
@@ -142,7 +142,7 @@ INSERT INTO rol_usuario (id, nombre, descripcion) VALUES
     ('20000000-0000-4000-8000-000000000002', 'VENDEDOR', 'Encargado de ventas y atención al cliente.'),
     ('20000000-0000-4000-8000-000000000003', 'CLIENTE', 'Usuario final que realiza compras y consulta catalogo.');
 
-INSERT INTO permiso_entity (id, codigo, descripcion) VALUES
+INSERT INTO permiso (id, codigo, descripcion) VALUES
     ('30000000-0000-4000-8000-000000000001', 'GESTIONAR_USUARIOS', 'Crear, editar y desactivar usuarios.'),
     ('30000000-0000-4000-8000-000000000002', 'GESTIONAR_ROLES', 'Administrar roles y asignarlos a usuarios.'),
     ('30000000-0000-4000-8000-000000000003', 'GESTIONAR_PERMISOS', 'Asignar o retirar permisos de los roles.'),
@@ -158,7 +158,7 @@ INSERT INTO permiso_entity (id, codigo, descripcion) VALUES
     ('30000000-0000-4000-8000-000000000013', 'VER_PEDIDOS_PROPIOS', 'Consultar únicamente sus pedidos.'),
     ('30000000-0000-4000-8000-000000000014', 'EDITAR_PERFIL_PROPIO', 'Actualizar sus datos personales, sin modificar su rol.');
 
-INSERT INTO rol_permiso_entity (id, rol_usuario_id, permiso_entity_id) VALUES
+INSERT INTO rol_permiso (id, rol_usuario_id, permiso_id) VALUES
     ('40000000-0000-4000-8000-000000000001', '20000000-0000-4000-8000-000000000001', '30000000-0000-4000-8000-000000000001'),
     ('40000000-0000-4000-8000-000000000002', '20000000-0000-4000-8000-000000000001', '30000000-0000-4000-8000-000000000002'),
     ('40000000-0000-4000-8000-000000000003', '20000000-0000-4000-8000-000000000001', '30000000-0000-4000-8000-000000000003'),

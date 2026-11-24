@@ -20,14 +20,8 @@ public class RegistrarCategoriaUseCaseImpl implements RegistrarCategoriaUseCase 
 
     @Override
     public CategoriaDTO registrar(CategoriaDTO categoria) {
-        try {
-            var categoriaResponse = categoriaMapper.toDomain(categoria);
-            var categoriaSave = categoriaRepository.save(categoriaResponse);
-            return categoriaMapper.toDTO(categoriaSave);
-        } catch (JpaExcepcion e) {
-            throw new RuntimeException(e);
-        }catch (Exception e){
-            throw new ArgumentoInvalidoException(e.getMessage());
-        }
+        var categoriaDomain = categoriaMapper.toDomain(categoria);
+        var categoriaSave = categoriaRepository.save(categoriaDomain);
+        return categoriaMapper.toDTO(categoriaSave);
     }
 }

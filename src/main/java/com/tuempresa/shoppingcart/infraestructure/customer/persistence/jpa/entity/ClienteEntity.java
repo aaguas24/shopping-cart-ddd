@@ -11,7 +11,7 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "cliente_entity")
+@Table(name = "cliente")
 public class ClienteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,7 +47,7 @@ public class ClienteEntity {
     private LocalDateTime fechaActualizacion;
 
     @OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "cliente_entity_id")
+    @JoinColumn(name = "cliente_id")
     private List<DireccionEntity> direccionEntities = new ArrayList<>();
 
     @PrePersist

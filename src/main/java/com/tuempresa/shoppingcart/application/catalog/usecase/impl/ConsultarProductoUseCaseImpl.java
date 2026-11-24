@@ -28,13 +28,7 @@ public class ConsultarProductoUseCaseImpl implements ConsultarProductoUseCase {
 
     @Override
     public Page<ProductoDTO> findAll(PaginacionDTO paginacion) {
-        try {
-            var pageable = ValidatePageableUtils.validate(paginacion);
-            return productoMapper.toDTO(productoRepository.findAll(pageable));
-        } catch (ArgumentoInvalidoException arg) {
-            throw new ArgumentoInvalidoException(arg.getMessage());
-        } catch (Exception ex) {
-            throw new RuntimeException(ex.getMessage());
-        }
+        var pageable = ValidatePageableUtils.validate(paginacion);
+        return productoMapper.toDTO(productoRepository.findAll(pageable));
     }
 }

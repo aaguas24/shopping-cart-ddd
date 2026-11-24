@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,9 +32,11 @@ public class ProductoController {
         this.consultarProductoUseCase = consultarProductoUseCase;
     }
 
-    @PostMapping
-    public ResponseEntity<ProductoAndInventarioWrapper> registrar(@Valid @RequestBody ProductoAndInventarioWrapper productoAndInventarioWrapper) throws JpaExcepcion {
-        return ResponseEntity.status(HttpStatus.CREATED).body(registrarProductoAndInventarioUseCase.registrar(productoAndInventarioWrapper));
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<ProductoAndInventarioWrapper> registrar(@Valid @RequestPart("producto") String data,
+                                                                  @RequestPart("imagen") List<MultipartFile> imagen) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(registrarProductoAndInventarioUseCase.registrar( data, imagen));
     }
     @GetMapping
     public ResponseEntity<Page<ProductoDTO>> findAll(@RequestParam(name = "page", defaultValue = "0") int page,

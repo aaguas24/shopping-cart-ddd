@@ -12,7 +12,7 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "user_entity")
+@Table(name = "usuario")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -86,4 +86,15 @@ public class ProductoAdapter implements ProductoRepository {
             throw new JpaExcepcion("Error al consultar datos");
         }
     }
+
+    @Override
+    public void updateImages(Producto producto) throws JpaExcepcion{
+        try {
+            productoRepo.updateImagenUrlById(producto.getImagenUrl(), producto.getId());
+        } catch (Exception e) {
+            logger.error("ProductoAdapter -- save(Producto producto): ",e.getMessage());
+            throw new JpaExcepcion("Error al guardar producto.");
+        }
+
+    }
 }

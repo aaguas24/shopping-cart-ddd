@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "rol_permiso_entity")
+@Table(name = "rol_permiso")
 public class RolPermisoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +21,6 @@ public class RolPermisoEntity {
     private RolUsuario rolUsuario;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "permiso_entity_id", nullable = false)
+    @JoinColumn(name = "permiso_id", nullable = false)
     private PermisoEntity permisoEntity;
 }

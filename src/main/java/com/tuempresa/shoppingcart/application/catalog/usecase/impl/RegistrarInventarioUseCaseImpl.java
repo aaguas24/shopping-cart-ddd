@@ -21,17 +21,9 @@ public class RegistrarInventarioUseCaseImpl implements RegistrarInventarioUseCas
     }
 
     @Override
-    public InventarioDTO registrar(InventarioDTO inventarioDTO) throws JpaExcepcion {
-        try {
-            var inventarioDomain = inventarioMapper.toDomain(inventarioDTO);
-            var inventarioResponse = inventarioRepository.save(inventarioDomain);
-            return inventarioMapper.toDto(inventarioResponse);
-        } catch (ArgumentoInvalidoException aex) {
-            throw new ArgumentoInvalidoException("Error al registrar el inventario: " + aex.getMessage());
-        } catch (JpaExcepcion jex) {
-            throw new JpaExcepcion("Error al registrar el inventario: " + jex.getMessage());
-        } catch (Exception ex) {
-            throw new IllegalStateException("Error inesperado al registrar el inventario: " + ex.getMessage(), ex);
-        }
+    public InventarioDTO registrar(InventarioDTO inventarioDTO) {
+        var inventarioDomain = inventarioMapper.toDomain(inventarioDTO);
+        var inventarioResponse = inventarioRepository.save(inventarioDomain);
+        return inventarioMapper.toDto(inventarioResponse);
     }
 }

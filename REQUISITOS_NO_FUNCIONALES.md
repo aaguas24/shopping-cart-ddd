@@ -7,7 +7,7 @@ La aplicación debe desarrollarse en Java con Spring Boot.
 Debe usar Maven para la gestión del proyecto.
 
 ## RNF-03: Base de Datos
-La base de datos debe ser H2 en memoria.
+La base de datos debe ser PostgreSQL.
 
 ## RNF-04: Arquitectura
 La arquitectura debe estar organizada por capas y paquetes.

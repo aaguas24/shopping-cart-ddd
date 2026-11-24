@@ -14,7 +14,7 @@ La intención es que el proyecto sirva para aprender:
 - Spring Boot
 - Maven
 - JPA/Hibernate
-- H2 en memoria
+- PostgreSQL
 - API REST
 - Testing
 - Separación por bounded contexts

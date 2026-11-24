@@ -10,7 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "direccion_entity")
+@Table(name = "direccion")
 public class DireccionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

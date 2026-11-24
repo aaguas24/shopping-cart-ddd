@@ -13,6 +13,7 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -29,6 +30,8 @@ public class ProductoDTO {
 
     @NotBlank(message = "La descripción del producto debe ser válida.")
     private String descripcion;
+
+    private List<String> imagenUrl;
 
     @NotNull(message = "El precio del producto debe ser válido.")
     @Positive(message = "El precio del producto debe ser un valor positivo.")
